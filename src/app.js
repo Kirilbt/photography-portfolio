@@ -1,5 +1,9 @@
 import * as THREE from 'three'
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
+import fragment from './shaders/fragment.glsl'
+import vertex from './shaders/vertex.glsl'
+
+console.log(vertex);
 
 export default class Sketch {
   constructor(options) {
@@ -12,7 +16,9 @@ export default class Sketch {
     this.camera = new THREE.PerspectiveCamera( 75, this.width / this.height, 0.1, 1000 )
     this.camera.position.z = 1
 
-    this.renderer = new THREE.WebGLRenderer()
+    this.renderer = new THREE.WebGLRenderer({
+      alpha: true
+    })
     this.renderer.setPixelRatio(window.devicePixelRatio)
     this.container.appendChild(this.renderer.domElement)
 
@@ -39,8 +45,17 @@ export default class Sketch {
   }
 
   addObjects() {
-    this.geometry = new THREE.BoxGeometry( 1, 1, 1 )
-    this.material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } )
+    this.geometry = new THREE.PlaneGeometry( 0.5, 0.5 )
+
+    this.material = new THREE.ShaderMaterial({
+      uniforms: {
+        time: { value: 1.0 },
+        resolution: { value: new THREE.Vector2() }
+      },
+
+      vertexShader: vertex,
+	    fragmentShader: fragment,
+    })
 
     this.cube = new THREE.Mesh( this.geometry, this.material )
     this.scene.add( this.cube )
