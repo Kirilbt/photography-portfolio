@@ -62,9 +62,10 @@ export default class Sketch {
     this.material = new THREE.ShaderMaterial({
       wireframe: false,
       uniforms: {
-        time: {value: 1.0},
+        uTime: {value: 1.0},
         uProgress: {value: 1.0},
         uTexture: {value: new THREE.TextureLoader().load(testTexture)},
+        uTextureSize: {value: new THREE.Vector2(100, 100)},
         uResolution: {value: new THREE.Vector2(this.width, this.height)},
         uQuadSize: {value: new THREE.Vector2(300, 300)}
       },
@@ -76,12 +77,12 @@ export default class Sketch {
     this.cube = new THREE.Mesh( this.geometry, this.material )
     this.scene.add( this.cube )
     this.cube.position.x = 300
-    this.cube.rotation.x = 0.5
+    this.cube.rotation.z = 0.5
   }
 
   render() {
     this.time += 0.05
-    this.material.uniforms.time.value = this.time
+    this.material.uniforms.uTime.value = this.time
     this.material.uniforms.uProgress.value = this.settings.progress
 
     // this.cube.rotation.x += 0.01
