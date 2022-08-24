@@ -2,9 +2,11 @@ import * as THREE from 'three'
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
 import GUI from 'lil-gui'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import fragment from './shaders/fragment.glsl'
 import vertex from './shaders/vertex.glsl'
-import testTexture from './textures/test.jpg'
+import testTexture from '../img/test.jpg'
 
 export default class Sketch {
   constructor(options) {
@@ -117,4 +119,131 @@ export default class Sketch {
 
 new Sketch({
   domElement: document.getElementById('container')
+})
+
+gsap.registerPlugin(ScrollTrigger)
+gsap.registerPlugin(ScrollToPlugin)
+
+let sections = gsap.utils.toArray(".section");
+let images = gsap.utils.toArray('.image')
+let links = gsap.utils.toArray('a')
+
+/**
+ * Counter
+ */
+
+let totalNum = sections.length
+document.querySelector('.totalNum').innerHTML = totalNum
+
+/**
+ * GSAP
+ */
+
+// Change background color on scroll
+
+gsap.utils.toArray(".section").map((elem) => {
+
+  var bgColor = elem.getAttribute('data-color');
+
+  let trigger = ScrollTrigger.create({
+    trigger: elem,
+    start: 'top 5%',
+    end: 'bottom 5%',
+    markers: false,
+    onToggle() {
+      gsap.to('body', {
+        backgroundColor: bgColor,
+        duration: '1.2'
+      })
+
+      // gsap.to('.title', {
+      //   color: bgColor,
+      //   duration: '1.2'
+      // })
+    }
+  });
+
+  return () => {
+    bgColor = elem.getAttribute('data-color')
+    if (trigger.isActive) {
+      gsap.killTweensOf('body');
+      gsap.set('body', {
+        backgroundColor: bgColor
+      })
+    }
+  }
+});
+
+// Immediate snap
+
+function goToSection(i) {
+  gsap.to(window, {
+    scrollTo: { y: i * innerHeight, autoKill: false, ease: "Power3.easeInOut" },
+    duration: 0.8
+  })
+  document.querySelector('.currentNum').innerHTML = i + 1
+}
+
+ScrollTrigger.defaults({
+  markers: false
+})
+
+sections.forEach((section, i) => {
+  const mainAnim = gsap.timeline({ paused: true })
+
+  ScrollTrigger.create({
+    trigger: section,
+    onEnter: () => goToSection(i),
+  })
+
+  ScrollTrigger.create({
+    trigger: section,
+    start: "bottom bottom",
+    onEnterBack: () => goToSection(i)
+  })
+})
+
+/**
+ * Card Mouse Hover
+ */
+
+// const animateDetails = (opacity, delay) => {
+//   gsap.to('.details', {
+//     opacity: opacity,
+//     duration: 0.3,
+//     delay: delay
+//   })
+// }
+
+const animateTitle = (opacity) => {
+  gsap.to('.title', {
+    opacity: opacity,
+    duration: 0.3,
+  })
+}
+
+images.forEach((image, i) => {
+  image.addEventListener("mouseenter", () => {
+    gsap.to(image, {
+      scale: 1.1,
+      duration: 0.5,
+      overwrite: true,
+      onToggle: () => {
+        // animateDetails(0, 0),
+        animateTitle(0)
+      }
+    })
+  })
+
+  image.addEventListener("mouseleave", () => {
+    gsap.to(images, {
+      scale: 1,
+      duration: 0.5,
+      overwrite: true,
+      onToggle: () => {
+        // animateDetails(1, 0.2),
+        animateTitle(1)
+      }
+    })
+  })
 })
