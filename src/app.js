@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
 import GUI from 'lil-gui'
+import gsap from 'gsap'
 import fragment from './shaders/fragment.glsl'
 import vertex from './shaders/vertex.glsl'
 import testTexture from './textures/test.jpg'
@@ -63,16 +64,35 @@ export default class Sketch {
       wireframe: false,
       uniforms: {
         uTime: {value: 1.0},
-        uProgress: {value: 1.0},
+        uProgress: {value: 0},
         uTexture: {value: new THREE.TextureLoader().load(testTexture)},
         uTextureSize: {value: new THREE.Vector2(100, 100)},
         uResolution: {value: new THREE.Vector2(this.width, this.height)},
-        uQuadSize: {value: new THREE.Vector2(300, 300)}
+        uQuadSize: {value: new THREE.Vector2(300, 300)},
+        uCorners: {value: new THREE.Vector4(0, 0, 0, 0)}
       },
 
       vertexShader: vertex,
 	    fragmentShader: fragment,
     })
+
+    this.tl = gsap.timeline()
+      .to(this.material.uniforms.uCorners.value, {
+        x: 1,
+        duration: 1
+      }, 0)
+      .to(this.material.uniforms.uCorners.value, {
+        y: 1,
+        duration: 1
+      }, 0.1)
+      .to(this.material.uniforms.uCorners.value, {
+        z: 1,
+        duration: 1
+      }, 0.2)
+      .to(this.material.uniforms.uCorners.value, {
+        w: 1,
+        duration: 1
+      }, 0.3)
 
     this.cube = new THREE.Mesh( this.geometry, this.material )
     this.scene.add( this.cube )
@@ -83,7 +103,9 @@ export default class Sketch {
   render() {
     this.time += 0.05
     this.material.uniforms.uTime.value = this.time
-    this.material.uniforms.uProgress.value = this.settings.progress
+    // this.material.uniforms.uProgress.value = this.settings.progress
+
+    this.tl.progress(this.settings.progress)
 
     // this.cube.rotation.x += 0.01
     // this.cube.rotation.y += 0.01

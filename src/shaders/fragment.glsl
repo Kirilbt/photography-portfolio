@@ -8,9 +8,9 @@ varying vec2 vSize;
 
 vec2 getUV(vec2 uv, vec2 textureSize, vec2 quadSize) {
   vec2 tempUV = uv - vec2(0.5);
-
   float quadAspect = quadSize.x/quadSize.y;
   float textureAspect = textureSize.x/textureSize.y;
+
   if(quadAspect<textureAspect){
     tempUV = tempUV*vec2(quadAspect/textureAspect,1.);
   } else {
