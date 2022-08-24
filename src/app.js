@@ -97,15 +97,14 @@ export default class Sketch {
     this.cube = new THREE.Mesh( this.geometry, this.material )
     this.scene.add( this.cube )
     this.cube.position.x = 300
-    this.cube.rotation.z = 0.5
   }
 
   render() {
     this.time += 0.05
     this.material.uniforms.uTime.value = this.time
-    // this.material.uniforms.uProgress.value = this.settings.progress
+    this.material.uniforms.uProgress.value = this.settings.progress
 
-    this.tl.progress(this.settings.progress)
+    // this.tl.progress(this.settings.progress)
 
     // this.cube.rotation.x += 0.01
     // this.cube.rotation.y += 0.01
