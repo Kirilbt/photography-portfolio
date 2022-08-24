@@ -107,8 +107,9 @@ justify-content: center;
 min-height: 100vh;
 }
 
-.image {
+.js-image {
 max-height: 80vh;
+opacity: 0.1;
 }
 
 .title {

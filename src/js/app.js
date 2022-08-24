@@ -60,10 +60,9 @@ export default class Sketch {
   }
 
   addObjects() {
-    this.geometry = new THREE.PlaneGeometry( 300, 300, 100, 100 )
-
+    this.geometry = new THREE.PlaneGeometry( 1, 1, 100, 100 )
     this.material = new THREE.ShaderMaterial({
-      wireframe: false,
+      // wireframe: true,
       uniforms: {
         uTime: {value: 1.0},
         uProgress: {value: 0},
@@ -96,20 +95,49 @@ export default class Sketch {
         duration: 1
       }, 0.3)
 
-    this.cube = new THREE.Mesh( this.geometry, this.material )
-    this.scene.add( this.cube )
-    this.cube.position.x = 300
+    this.mesh = new THREE.Mesh( this.geometry, this.material )
+    this.mesh.position.x = 300
+    this.mesh.scale.set(300, 300, 1)
+    // this.scene.add( this.mesh )
+
+    this.images = [...document.querySelectorAll('.js-image')]
+    this.materials = []
+    const loader = new THREE.TextureLoader()
+
+    this.imageStore = this.images.map(img => {
+      let bounds = img.getBoundingClientRect()
+      let m = this.material.clone()
+      this.materials.push(m)
+      // let texture = new THREE.Texture(img)
+      let texture = loader.load(img.src)
+      // texture.needsUpdate = true
+
+      m.uniforms.uTexture.value = texture
+
+      let mesh = new THREE.Mesh(this.geometry, m)
+      this.scene.add(mesh)
+      mesh.scale.set(bounds.width, bounds.height, 1)
+
+      return {
+        img: img,
+        mesh: mesh,
+        width: bounds.width,
+        height: bounds.height,
+        top: bounds.top,
+        left: bounds.left
+      }
+    })
   }
 
   render() {
     this.time += 0.05
     this.material.uniforms.uTime.value = this.time
-    this.material.uniforms.uProgress.value = this.settings.progress
+    // this.material.uniforms.uProgress.value = this.settings.progress
 
-    // this.tl.progress(this.settings.progress)
+    this.tl.progress(this.settings.progress)
 
-    // this.cube.rotation.x += 0.01
-    // this.cube.rotation.y += 0.01
+    // this.mesh.rotation.x += 0.01
+    // this.mesh.rotation.y += 0.01
 
     this.renderer.render( this.scene, this.camera )
 
@@ -125,7 +153,7 @@ gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(ScrollToPlugin)
 
 let sections = gsap.utils.toArray(".section");
-let images = gsap.utils.toArray('.image')
+let images = gsap.utils.toArray('.js-image')
 let links = gsap.utils.toArray('a')
 
 /**
