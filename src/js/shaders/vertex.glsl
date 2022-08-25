@@ -17,6 +17,7 @@ void main() {
 
   fullScreenState.x *= uResolution.x;
   fullScreenState.y *= uResolution.y;
+  fullScreenState.z += uCorners.x;
 
   float cornersProgress = mix(
     mix(uCorners.z, uCorners.w, uv.x),
