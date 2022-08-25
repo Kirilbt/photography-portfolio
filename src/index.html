@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://use.typekit.net/lvr4gcn.css">
   </head>
-  <body>
+  <body data-barba="wrapper">
     <nav>
       <a href="index.html">kiril.photography</a>
       <div class="nav-items">
@@ -20,62 +20,64 @@
       <p><span class="currentNum"></span>/<span class="totalNum"></span></p>
     </div>
 
-    <div asscroll-container>
-      <div class="container">
-        <section class="section" data-color="#fff1d8">
-          <div class="mask">
-            <a href="project.html">
-              <img class="js-image" src="img/fruits.jpg">
-            </a>
-          </div>
-          <h2 class="title">Summer Tones</h2>
-          <!-- <div class="details">
-            <p>May 2019</p>
-            <p>Bern, Switzerland</p>
-          </div> -->
-        </section>
-        <section class="section" data-color="#d1ebd3">
-          <div class="mask">
-            <img class="js-image" src="img/power.jpg">
-          </div>
-          <h2 class="title">Elegant Power</h2>
-          <!-- <div class="details">
-            <p>November 2019</p>
-            <p>Lausanne, Switzerland</p>
-          </div -->
-        </section>
-        <section class="section" data-color="#f0f0f0">
-          <div class="mask">
-            <img class="js-image" src="img/minimal.jpg">
-          </div>
-          <h2 class="title">Minimal Sensuality</h2>
-          <!-- <div class="details">
-            <p>March 2019</p>
-            <p>Bern, Switzerland</p>
-          </div> -->
-        </section>
-        <section class="section" data-color="#d8fff6">
-          <div class="mask">
-            <img class="js-image" src="img/neon.jpg">
-          </div>
-          <h2 class="title">Neon Future</h2>
-          <!-- <div class="details">
-            <p>November 2019</p>
-            <p>Zurich, Switzerland</p>
-          </div> -->
-        </section>
-        <section class="section" data-color="#fff1d8">
-          <div class="mask">
-            <img class="js-image" src="img/light.jpg">
-          </div>
-          <h2 class="title">Under a New Light</h2>
-          <!-- <div class="details">
-            <p>September 2018</p>
-            <p>Milano, Italy</p>
-          </div> -->
-        </section>
+    <main data-barba="container" data-barba-namespace="home">
+      <div asscroll-container>
+        <div class="container">
+          <section class="section" data-color="#fff1d8">
+            <div class="mask">
+              <a href="project.html">
+                <img class="js-image" src="img/fruits.jpg">
+              </a>
+            </div>
+            <h2 class="title">Summer Tones</h2>
+            <!-- <div class="details">
+              <p>May 2019</p>
+              <p>Bern, Switzerland</p>
+            </div> -->
+          </section>
+          <section class="section" data-color="#d1ebd3">
+            <div class="mask">
+              <img class="js-image" src="img/power.jpg">
+            </div>
+            <h2 class="title">Elegant Power</h2>
+            <!-- <div class="details">
+              <p>November 2019</p>
+              <p>Lausanne, Switzerland</p>
+            </div -->
+          </section>
+          <section class="section" data-color="#f0f0f0">
+            <div class="mask">
+              <img class="js-image" src="img/minimal.jpg">
+            </div>
+            <h2 class="title">Minimal Sensuality</h2>
+            <!-- <div class="details">
+              <p>March 2019</p>
+              <p>Bern, Switzerland</p>
+            </div> -->
+          </section>
+          <section class="section" data-color="#d8fff6">
+            <div class="mask">
+              <img class="js-image" src="img/neon.jpg">
+            </div>
+            <h2 class="title">Neon Future</h2>
+            <!-- <div class="details">
+              <p>November 2019</p>
+              <p>Zurich, Switzerland</p>
+            </div> -->
+          </section>
+          <section class="section" data-color="#fff1d8">
+            <div class="mask">
+              <img class="js-image" src="img/light.jpg">
+            </div>
+            <h2 class="title">Under a New Light</h2>
+            <!-- <div class="details">
+              <p>September 2018</p>
+              <p>Milano, Italy</p>
+            </div> -->
+          </section>
+        </div>
       </div>
-    </div>
+    </main>
 
     <footer>
       <p>© 2022</p>
@@ -85,6 +87,7 @@
         <a href="https://www.linkedin.com/in/kiriltucker/">linkedin</a>
       </div>
     </footer>
+
     <div id="container"></div>
     <script src="js/app.js" type="module"></script>
   </body>

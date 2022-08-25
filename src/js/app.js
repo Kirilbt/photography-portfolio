@@ -5,6 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { ScrollToPlugin } from 'gsap/ScrollToPlugin'
 import ASScroll from '@ashthornton/asscroll'
+import barba from '@barba/core'
 import fragment from './shaders/fragment.glsl'
 import vertex from './shaders/vertex.glsl'
 import testTexture from '../img/test.jpg'
@@ -46,7 +47,14 @@ export default class Sketch {
     this.addObjects()
     this.resize()
     this.render()
+    this.barba()
     this.setupResize()
+  }
+
+  barba() {
+    barba.init({
+      debug: true
+    });
   }
 
   setupASScroll() {
