@@ -109,7 +109,7 @@ min-height: 100vh;
 
 .js-image {
 max-height: 80vh;
-opacity: 0.1;
+opacity: 0;
 }
 
 .title {
@@ -123,7 +123,43 @@ pointer-events: none;
 mix-blend-mode: luminosity;
 }
 
-/* h1 {
-  color: hotpink;
-  font-family: cursive;
-} */
+/*
+* Single page
+*/
+
+.single h1{
+    margin-bottom: 1em;
+    font-size: 3em;
+    font-family: orpheuspro, serif;
+    font-size: 8rem;
+    font-weight: 400;
+    font-style: normal;
+}
+figure{
+    margin: 0 0 3em 0;
+    display: flex;
+    gap: 50px;
+}
+figure+figure{
+    flex-direction: row-reverse;
+}
+figure img{
+    float: left;
+    margin-right: 30px;
+}
+.single__content{
+    max-width: 1000px;
+    margin: 50px auto;
+}
+.single__content p{
+    margin: 2em 0;
+    line-height: 1.7;
+    font-size: 1.1em;
+}
+.single__top{
+    height: 100vh;
+    width: 100vw;
+    background-size: cover;
+    background-position: 50% 50%;
+    background-image: url(img/fruits.jpg);
+}

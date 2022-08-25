@@ -40,7 +40,7 @@ export default class Sketch {
 
     this.setSmoothScroll()
     this.setScrollTrigger()
-    // this.setMouseHover()
+    this.setMouseHover()
     // this.setCounter()
     // this.setupSettings()
     this.addObjects()
