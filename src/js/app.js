@@ -36,14 +36,15 @@ export default class Sketch {
     this.sections = gsap.utils.toArray('.section');
     this.images = gsap.utils.toArray('.js-image')
     this.links = gsap.utils.toArray('a')
+    this.materials = []
 
     this.setSmoothScroll()
     this.setScrollTrigger()
     this.setMouseHover()
     // this.setCounter()
     this.setupSettings()
-    this.resize()
     this.addObjects()
+    this.resize()
     this.render()
     this.setupResize()
   }
@@ -216,6 +217,27 @@ export default class Sketch {
     this.renderer.setSize( this.width, this.height )
     this.camera.aspect = this.width/this.height
     this.camera.updateProjectionMatrix()
+    this.camera.fov = 2*Math.atan((this.height/2)/600) * 180 / Math.PI
+
+    this.materials.forEach(m => {
+      m.uniforms.uResolution.value.x = this.width
+      m.uniforms.uResolution.value.y = this.height
+    })
+
+    this.imageStore.forEach(i => {
+      let bounds = i.img.getBoundingClientRect()
+      i.mesh.scale.set(bounds.width, bounds.height, 1)
+      i.top = bounds.top + this.asscroll.currentPos
+      i.left = bounds.left
+      i.width = bounds.width
+      i.height = bounds.height
+
+      i.mesh.material.uniforms.uQuadSize.value.x = bounds.width
+      i.mesh.material.uniforms.uQuadSize.value.y = bounds.height
+
+      i.mesh.material.uniforms.uTextureSize.value.x = bounds.width
+      i.mesh.material.uniforms.uTextureSize.value.y = bounds.height
+    })
   }
 
   setupResize() {
@@ -263,7 +285,6 @@ export default class Sketch {
     this.mesh.scale.set(300, 300, 1)
     // this.scene.add( this.mesh )
 
-    this.materials = []
     const loader = new THREE.TextureLoader()
 
     this.imageStore = this.images.map(img => {
@@ -292,7 +313,7 @@ export default class Sketch {
   }
 
   setPosition() {
-    console.log(this.asscroll.currentPos);
+    // console.log(this.asscroll.currentPos);
     this.imageStore.forEach(o =>{
       o.mesh.position.x = o.left - this.width/2 + o.width/2
       o.mesh.position.y = this.asscroll.currentPos + -o.top + this.height/2 - o.height/2
@@ -303,7 +324,10 @@ export default class Sketch {
     this.time += 0.05
     this.material.uniforms.uTime.value = this.time
     // this.material.uniforms.uProgress.value = this.settings.progress
+
+    this.asscroll.update()
     this.setPosition()
+
     this.tl.progress(this.settings.progress)
 
     // this.mesh.rotation.x += 0.01
