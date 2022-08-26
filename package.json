@@ -1,13 +1,13 @@
 {
   "name": "photography-showcase",
-  "source": "index.html",
+  "source": "src/index.html",
   "scripts": {
     "start": "parcel",
     "build": "parcel build"
   },
   "devDependencies": {
     "@parcel/transformer-glsl": "^2.7.0",
-    "parcel": "^2.7.0"
+    "parcel": "latest"
   },
   "dependencies": {
     "@ashthornton/asscroll": "^2.0.11",
