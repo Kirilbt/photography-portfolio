@@ -69,6 +69,9 @@ export default class Sketch {
           .to(data.current.container, {
             opacity: 0
           })
+          .set('.curtain', {
+            x: '100%'
+          })
         },
         enter(data) {
           that.asscroll = new ASScroll({
@@ -143,8 +146,8 @@ export default class Sketch {
     gsap.ticker.add(asscroll.update)
 
     ScrollTrigger.defaults({
-      scroller: asscroll.containerElement })
-
+      scroller: asscroll.containerElement
+    })
 
     ScrollTrigger.scrollerProxy(asscroll.containerElement, {
       scrollTop(value) {
@@ -164,14 +167,10 @@ export default class Sketch {
       },
       fixedMarkers: true })
 
-
-    asscroll.on("update", ScrollTrigger.update)
-    ScrollTrigger.addEventListener("refresh", asscroll.resize)
-
     requestAnimationFrame(() => {
       asscroll.enable({
         newScrollElements: document.querySelectorAll(".gsap-marker-start, .gsap-marker-end, [asscroll]"),
-        // horizontalScroll: !document.body.classList.contains('b-project')
+        horizontalScroll: document.body.classList.contains('b-project')
       })
     })
     return asscroll;
