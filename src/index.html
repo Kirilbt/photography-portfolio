@@ -8,25 +8,25 @@
   </head>
   <body data-barba="wrapper">
     <nav>
-      <a href="index.html">kiril.photography</a>
+      <a class="link" href="index.html">kiril.photography</a>
       <div class="nav-items">
-        <a href="index.html">portraits</a>
-        <a href="">street</a>
-        <a href="">about</a>
+        <a class="link" href="index.html">portraits</a>
+        <a class="link" href="">street</a>
+        <a class="link" href="">about</a>
       </div>
     </nav>
 
-    <div class="scroll-counter">
+    <!-- <div class="scroll-counter">
       <p><span class="currentNum"></span>/<span class="totalNum"></span></p>
-    </div>
+    </div> -->
 
-    <main data-barba="container" data-barba-namespace="home">
+    <main data-barba="container" data-barba-namespace="index">
       <div asscroll-container>
-        <div class="container">
+        <div class="container-sections scroll-wrap">
           <section class="section" data-color="#fff1d8">
-            <div class="mask">
+            <div class="js-image-mask">
               <a href="project.html">
-                <img class="js-image" src="img/fruits.jpg">
+                <img class="js-image" src="img/summer/fruits.jpg">
               </a>
             </div>
             <h2 class="title">Summer Tones</h2>
@@ -82,12 +82,13 @@
     <footer>
       <p>© 2022</p>
       <div class="footer-items">
-        <a href="https://www.instagram.com/kiril.tucker/">instagram</a>
-        <a href="https://twitter.com/kirilbt">twitter</a>
-        <a href="https://www.linkedin.com/in/kiriltucker/">linkedin</a>
+        <a class="link" href="https://www.instagram.com/kiril.tucker/">instagram</a>
+        <a class="link" href="https://twitter.com/kirilbt">twitter</a>
+        <a class="link" href="https://www.linkedin.com/in/kiriltucker/">linkedin</a>
       </div>
     </footer>
 
+    <div class="curtain"></div>
     <div id="container"></div>
     <script src="js/app.js" type="module"></script>
   </body>

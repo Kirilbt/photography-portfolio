@@ -27,139 +27,169 @@ canvas {
   z-index: -1;
   top: 0;
   left: 0;
-  }
+}
 
 body::-webkit-scrollbar {
   display: none; /* for Chrome, Safari, and Opera */
 }
 
 nav {
-position: fixed;
-z-index: 1000;
-display: flex;
-justify-content: space-between;
-width: 100%;
-padding: 16px;
+  position: fixed;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px;
 }
 
 .nav-items a {
-margin-left: 16px;
+  margin-left: 16px;
 }
 
 .scroll-counter {
-position: fixed;
-top: 50%;
-right: 0;
-z-index: 1000;
-padding: 16px;
+  position: fixed;
+  top: 50%;
+  right: 0;
+  z-index: 1000;
+  padding: 16px;
 }
 
-a {
-text-decoration: none;
-color: #333;
-display: inline-block;
-position: relative;
+.link {
+  text-decoration: none;
+  color: #333;
+  display: inline-block;
+  position: relative;
 }
 
 a::after {
-content: '';
-position: absolute;
-width: 100%;
-transform: scaleX(0);
-height: 1px;
-bottom: -3px;
-left: 0;
-background-color: #333;
-transform-origin: bottom right;
-transition: transform 0.3s ease-out;
+  content: '';
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 1px;
+  bottom: -3px;
+  left: 0;
+  background-color: #333;
+  transform-origin: bottom right;
+  transition: transform 0.3s ease-out;
 }
 
 a:hover::after {
-transform: scaleX(1);
-transform-origin: bottom left;
+  transform: scaleX(1);
+  transform-origin: bottom left;
 }
 
 footer {
-position: fixed;
-bottom: 0;
-z-index: 1000;
-display: flex;
-justify-content: space-between;
-width: 100%;
-padding: 16px;
+  position: fixed;
+  bottom: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 16px;
 }
 
 footer a {
-margin-left: 16px;
+  margin-left: 16px;
 }
 
-.container {
-display: flex;
-flex-direction: column;
-align-items: center;
+.container-sections {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .section {
-/* position: relative; */
-display: flex;
-align-items: center;
-justify-content: center;
-min-height: 100vh;
+  /* position: relative; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
 }
 
 .js-image {
-max-height: 80vh;
-opacity: 0;
+  max-height: 80vh;
+  opacity: 0.2;
+  transition: transform .2s;
+}
+
+.js-image:hover {
+  transform: scale(1.1);;
 }
 
 .title {
-position: absolute;
-font-family: orpheuspro, serif;
-font-size: 8rem;
-font-weight: 400;
-font-style: normal;
-color: rgb(155, 155, 155);
-pointer-events: none;
-mix-blend-mode: luminosity;
+  position: absolute;
+  font-family: orpheuspro, serif;
+  font-size: 8rem;
+  font-weight: 400;
+  font-style: normal;
+  color: rgb(155, 155, 155);
+  pointer-events: none;
+  mix-blend-mode: luminosity;
 }
 
 /*
 * Single page
 */
 
-.single h1{
-    margin-bottom: 1em;
-    font-size: 3em;
-    font-family: orpheuspro, serif;
-    font-size: 8rem;
-    font-weight: 400;
-    font-style: normal;
+.single {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  gap: 1rem;
 }
-figure{
-    margin: 0 0 3em 0;
-    display: flex;
-    gap: 50px;
+
+.single h1 {
+  margin-bottom: 1em;
+  font-size: 3em;
+  font-family: orpheuspro, serif;
+  font-size: 8rem;
+  font-weight: 400;
+  font-style: normal;
 }
-figure+figure{
-    flex-direction: row-reverse;
+
+.single__content {
+  margin: auto;
 }
-figure img{
-    float: left;
-    margin-right: 30px;
+
+.single__top {
+  height: 100vh;
+  min-width: 100vw;
+  background-size: cover;
+  background-position: 50% 50%;
+  background-image: url(img/summer/fruits.jpg);
 }
-.single__content{
-    max-width: 1000px;
-    margin: 50px auto;
+
+.project-details {
+  margin: 4rem;
 }
-.single__content p{
-    margin: 2em 0;
-    line-height: 1.7;
-    font-size: 1.1em;
+
+.project-details .project-title {
+  font-family: orpheuspro, serif;
+  font-size: 8rem;
+  line-height: 8.5rem;
+  font-weight: 400;
+  font-style: normal;
+  color: #333333;
+  mix-blend-mode: luminosity;
 }
-.single__top{
-    height: 100vh;
-    width: 100vw;
-    background-size: cover;
-    background-position: 50% 50%;
-    background-image: url(img/fruits.jpg);
+
+.project-picture {
+  height: 100vh;
+  width: auto;
+}
+
+/*
+* Curtain
+*/
+
+.curtain {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  background: #ccc;
+  transform: translate(100%, 0%);
 }

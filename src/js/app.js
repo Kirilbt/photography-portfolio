@@ -29,6 +29,7 @@ export default class Sketch {
       alpha: true
     })
     this.renderer.setPixelRatio(window.devicePixelRatio)
+
     this.container.appendChild(this.renderer.domElement)
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
@@ -41,7 +42,7 @@ export default class Sketch {
 
     this.setSmoothScroll()
     this.setScrollTrigger()
-    this.setMouseHover()
+    // this.setMouseHover()
     // this.setCounter()
     // this.setupSettings()
     this.addObjects()
@@ -52,8 +53,83 @@ export default class Sketch {
   }
 
   barba() {
+    let that = this
+
     barba.init({
-      debug: true
+      // debug: true,
+      transitions: [{
+        name: 'from-index-transition',
+        from: {
+          namespace: ['index']
+        },
+        leave(data) {
+          that.asscroll.disable()
+
+          return gsap.timeline()
+          .to(data.current.container, {
+            opacity: 0
+          })
+        },
+        enter(data) {
+          that.asscroll = new ASScroll({
+            disableRaf: true,
+            containerElement: data.next.container.querySelector('[asscroll-container]')
+          })
+          that.asscroll.enable({
+            horizontalScroll: true,
+            newScrollElements: data.next.container.querySelector('.scroll-wrap')
+          })
+
+          return gsap.timeline()
+          .from(data.next.container, {
+            opacity: 0,
+            onComplete: ()=> {
+              that.container.style.display = 'none'
+            }
+          })
+        }
+      },
+      {
+        name: 'from-project-transition',
+        from: {
+          namespace: ['project']
+        },
+        leave(data) {
+          that.asscroll.disable()
+
+          return gsap.timeline()
+          .to('.curtain', {
+            duration: 0.3,
+            x: 0
+          })
+          .to(data.current.container, {
+            opacity: 0
+          })
+        },
+        enter(data) {
+          console.log(data.next.container);
+          that.asscroll = new ASScroll({
+            disableRaf: true,
+            containerElement: data.next.container.querySelector('[asscroll-container]')
+          })
+          that.asscroll.enable({
+            newScrollElements: data.next.container.querySelector('.scroll-wrap')
+          })
+
+          that.addObjects()
+          that.resize()
+
+          return gsap.timeline()
+          .to('.curtain', {
+            duration: 0.3,
+            x: '-100%'
+          })
+          .from(data.next.container, {
+            opacity: 0
+          })
+        }
+      }
+    ]
     });
   }
 
@@ -94,7 +170,8 @@ export default class Sketch {
 
     requestAnimationFrame(() => {
       asscroll.enable({
-        newScrollElements: document.querySelectorAll(".gsap-marker-start, .gsap-marker-end, [asscroll]")
+        newScrollElements: document.querySelectorAll(".gsap-marker-start, .gsap-marker-end, [asscroll]"),
+        // horizontalScroll: !document.body.classList.contains('b-project')
       })
     })
     return asscroll;
@@ -253,6 +330,7 @@ export default class Sketch {
   }
 
   addObjects() {
+    console.log('object');
     this.geometry = new THREE.PlaneGeometry( 1, 1, 100, 100 )
     this.material = new THREE.ShaderMaterial({
       // wireframe: true,
@@ -279,15 +357,17 @@ export default class Sketch {
 
     this.imageStore = this.images.map(img => {
       let bounds = img.getBoundingClientRect()
+
       let m = this.material.clone()
       this.materials.push(m)
+
       // let texture = new THREE.Texture(img)
       let texture = loader.load(img.src)
-      // texture.needsUpdate = true
+      texture.needsUpdate = true
 
       m.uniforms.uTexture.value = texture
 
-      img.addEventListener('mouseover', () => {
+      img.addEventListener('click', () => {
         this.tl = gsap.timeline()
         .to(m.uniforms.uCorners.value, {
           x: 1,
@@ -307,25 +387,25 @@ export default class Sketch {
         }, 0.3)
       })
 
-      img.addEventListener('mouseout', () => {
-        this.tl = gsap.timeline()
-        .to(m.uniforms.uCorners.value, {
-          x: 0,
-          duration: 0.4
-        }, 0)
-        .to(m.uniforms.uCorners.value, {
-          y: 0,
-          duration: 0.4
-        }, 0.1)
-        .to(m.uniforms.uCorners.value, {
-          z: 0,
-          duration: 0.4
-        }, 0.2)
-        .to(m.uniforms.uCorners.value, {
-          w: 0,
-          duration: 0.4
-        }, 0.3)
-      })
+      // img.addEventListener('mouseout', () => {
+      //   this.tl = gsap.timeline()
+      //   .to(m.uniforms.uCorners.value, {
+      //     x: 0,
+      //     duration: 0.4
+      //   }, 0)
+      //   .to(m.uniforms.uCorners.value, {
+      //     y: 0,
+      //     duration: 0.4
+      //   }, 0.1)
+      //   .to(m.uniforms.uCorners.value, {
+      //     z: 0,
+      //     duration: 0.4
+      //   }, 0.2)
+      //   .to(m.uniforms.uCorners.value, {
+      //     w: 0,
+      //     duration: 0.4
+      //   }, 0.3)
+      // })
 
       let mesh = new THREE.Mesh(this.geometry, m)
       this.scene.add(mesh)
@@ -353,11 +433,11 @@ export default class Sketch {
   render() {
     this.time += 0.05
     this.material.uniforms.uTime.value = this.time
-    // this.material.uniforms.uProgress.value = this.settings.progress
 
     // this.asscroll.update()
     this.setPosition()
 
+    // this.material.uniforms.uProgress.value = this.settings.progress
     // this.tl.progress(this.settings.progress)
 
     // this.mesh.rotation.x += 0.01
