@@ -161,7 +161,10 @@ footer a {
 }
 
 .project-details {
-  margin: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin: 5rem 10rem 5rem 4rem;
 }
 
 .project-details .project-title {
