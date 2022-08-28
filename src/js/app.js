@@ -8,7 +8,7 @@ import ASScroll from '@ashthornton/asscroll'
 import barba from '@barba/core'
 import fragment from './shaders/fragment.glsl'
 import vertex from './shaders/vertex.glsl'
-import testTexture from '../img/test.jpg'
+// import testTexture from '../img/test.jpg'
 
 gsap.registerPlugin(ScrollTrigger)
 gsap.registerPlugin(ScrollToPlugin)
@@ -44,7 +44,6 @@ export default class Sketch {
     this.setSmoothScroll()
     this.setScrollTrigger()
     // this.setMouseHover()
-    // this.setCounter()
     // this.setupSettings()
     this.addObjects()
     this.addClickEvents()
@@ -294,11 +293,6 @@ export default class Sketch {
     })
   }
 
-  setCounter() {
-    let totalNum = this.sections.length
-    document.querySelector('.totalNum').innerHTML = totalNum
-  }
-
   setupSettings() {
     this.settings = {
       progress: 0
@@ -348,7 +342,7 @@ export default class Sketch {
       uniforms: {
         uTime: {value: 1.0},
         uProgress: {value: 0},
-        uTexture: {value: new THREE.TextureLoader().load(testTexture)},
+        uTexture: {value: null},
         uTextureSize: {value: new THREE.Vector2(100, 100)},
         uResolution: {value: new THREE.Vector2(this.width, this.height)},
         uQuadSize: {value: new THREE.Vector2(300, 300)},
@@ -359,9 +353,9 @@ export default class Sketch {
 	    fragmentShader: fragment,
     })
 
-    this.mesh = new THREE.Mesh( this.geometry, this.material )
-    this.mesh.position.x = 300
-    this.mesh.scale.set(300, 300, 1)
+    // this.mesh = new THREE.Mesh( this.geometry, this.material )
+    // this.mesh.position.x = 300
+    // this.mesh.scale.set(300, 300, 1)
     // this.scene.add( this.mesh )
 
     const loader = new THREE.TextureLoader()
@@ -373,14 +367,14 @@ export default class Sketch {
       this.materials.push(m)
 
       // let texture = new THREE.Texture(img)
-      let texture = loader.load(img.src)
       // texture.needsUpdate = true
+      let texture = loader.load(img.src)
 
       m.uniforms.uTexture.value = texture
 
       let mesh = new THREE.Mesh(this.geometry, m)
-      this.scene.add(mesh)
       mesh.scale.set(bounds.width, bounds.height, 1)
+      this.scene.add(mesh)
 
       return {
         img: img,
@@ -433,7 +427,6 @@ export default class Sketch {
 
     this.setPosition()
     this.renderer.render( this.scene, this.camera )
-
     requestAnimationFrame(this.render.bind(this))
   }
 }
