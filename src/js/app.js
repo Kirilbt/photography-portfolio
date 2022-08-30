@@ -36,7 +36,7 @@ export default class Sketch {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement)
 
     this.time = 0
-    this.sections = gsap.utils.toArray('.section');
+    this.sections = gsap.utils.toArray('.section')
     this.images = gsap.utils.toArray('.js-image')
     this.links = gsap.utils.toArray('a')
     this.materials = []
@@ -360,6 +360,7 @@ export default class Sketch {
 
     const loader = new THREE.TextureLoader()
 
+    this.images = gsap.utils.toArray('.js-image')
     this.imageStore = this.images.map(img => {
       let bounds = img.getBoundingClientRect()
 
