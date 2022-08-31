@@ -109,7 +109,7 @@ footer a {
 
 .js-image {
   max-height: 80vh;
-  opacity: 0.2;
+  opacity: 1;
   transition: transform .2s;
 }
 
@@ -157,14 +157,34 @@ footer a {
   min-width: 100vw;
   background-size: cover;
   background-position: 50% 50%;
-  background-image: url(img/summer/fruits.jpg);
+}
+
+.summer {
+  background-image: url(img/summer.jpg);
+}
+
+.power {
+  background-image: url(img/power.jpg);
+}
+
+.minimal {
+  background-image: url(img/minimal.jpg);
+}
+
+.neon {
+  background-image: url(img/neon.jpg);
+}
+
+.light {
+  background-image: url(img/light.jpg);
 }
 
 .project-details {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  margin: 5rem 10rem 5rem 4rem;
+  padding: 5rem 10rem 5rem 4rem;
+  min-width: 50vw;
 }
 
 .project-details .project-title {
