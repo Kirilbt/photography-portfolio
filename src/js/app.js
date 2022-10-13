@@ -43,7 +43,7 @@ export default class Sketch {
 
     this.setSmoothScroll()
     this.setScrollTrigger()
-    // this.setMouseHover()
+    this.setMouseHover()
     // this.setupSettings()
     this.addObjects()
     this.addClickEvents()
@@ -51,6 +51,7 @@ export default class Sketch {
     this.render()
     this.barba()
     this.setupResize()
+    this.onProjectPageLoad()
   }
 
   barba() {
@@ -129,9 +130,12 @@ export default class Sketch {
           })
           that.imageStore = []
           that.materials = []
+          that.onProjectPageLoad()
           that.addObjects()
           that.resize()
           that.addClickEvents()
+          that.setScrollTrigger()
+          that.setMouseHover()
           that.container.style.visibility = 'visible'
 
           return gsap.timeline()
@@ -192,6 +196,18 @@ export default class Sketch {
     this.asscroll = this.setupASScroll()
   }
 
+  onProjectPageLoad() {
+
+    console.log('check');
+    gsap.from('.project-title', {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      delay: 0.5,
+      ease: 'expo.inOut',
+    })
+  }
+
   setScrollTrigger() {
 
     // Change background color on scroll
@@ -222,7 +238,7 @@ export default class Sketch {
           })
         }
       }
-    });
+    })
 
     // // Immediate snap
 
@@ -251,13 +267,13 @@ export default class Sketch {
   }
 
   setMouseHover() {
-    // const animateDetails = (opacity, delay) => {
-    //   gsap.to('.details', {
-    //     opacity: opacity,
-    //     duration: 0.3,
-    //     delay: delay
-    //   })
-    // }
+    const animateDetails = (opacity, delay) => {
+      gsap.to('.details', {
+        opacity: opacity,
+        duration: 0.3,
+        delay: delay
+      })
+    }
 
     const animateTitle = (opacity) => {
       gsap.to('.title', {
@@ -270,7 +286,7 @@ export default class Sketch {
       image.addEventListener('mouseenter', () => {
         gsap.to(image, {
           scale: 1.1,
-          duration: 0.5,
+          duration: 0.2,
           overwrite: true,
           onToggle: () => {
             // animateDetails(0, 0),

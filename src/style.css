@@ -109,13 +109,13 @@ footer a {
 
 .js-image {
   max-height: 80vh;
-  opacity: 1;
+  opacity: 0;
   transition: transform .2s;
 }
 
-.js-image:hover {
+/* .js-image:hover {
   transform: scale(1.1);;
-}
+} */
 
 .title {
   position: absolute;
